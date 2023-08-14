@@ -77,7 +77,7 @@ export class Flip {
      * @param globalPos - Touch Point Coordinates (relative window)
      */
     public flip(globalPos: Point): void {
-        if (this.app.getSettings().disableFlipByClick && !this.isPointOnCorners(globalPos)) return;
+        if (!this.isPointOnCorners(globalPos)) return;
 
         // the flipiing process is already running
         if (this.calc !== null) this.render.finishAnimation();
@@ -386,7 +386,7 @@ export class Flip {
         const rect = this.getBoundsRect();
 
         if (this.render.getOrientation() === Orientation.PORTRAIT) {
-            if (touchPos.x - rect.pageWidth <= rect.width / 5) {
+            if (touchPos.x - rect.pageWidth <= rect.width / 20) {
                 return FlipDirection.BACK;
             }
         } else if (touchPos.x < rect.width / 2) {
@@ -433,7 +433,7 @@ export class Flip {
         const rect = this.getBoundsRect();
         const pageWidth = rect.pageWidth;
 
-        const operatingDistance = Math.sqrt(Math.pow(pageWidth, 2) + Math.pow(rect.height, 2)) / 5;
+        const operatingDistance = Math.sqrt(Math.pow(pageWidth, 2) + Math.pow(rect.height, 2)) / 20;
 
         const bookPos = this.render.convertToBook(globalPos);
 
